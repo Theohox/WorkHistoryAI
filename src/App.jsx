@@ -25,18 +25,10 @@ function App() {
     setIsLoading(true);
 
     try {
-      // Use environment variable at build time
-      const apiKey = process.env.VITE_OPENAI_API_KEY || '';
-      
-      if (!apiKey) {
-        throw new Error('API key not found');
-      }
-
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('/api/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
@@ -47,7 +39,6 @@ function App() {
           ],
         }),
       });
-
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
