@@ -171,3 +171,4 @@ cython_debug/
 # Build output
 dist/
 build/.env
+.env
