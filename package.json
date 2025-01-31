@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://theohox.github.io/workhistoryai",
+  "homepage": "https://theohox.github.io/WorkHistoryAI",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
