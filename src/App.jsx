@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import OpenAI from 'openai';
 import { SYSTEM_PROMPT } from './prompts';
 
 function App() {
@@ -26,23 +25,30 @@ function App() {
     setIsLoading(true);
 
     try {
-      const openai = new OpenAI({
-        apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-        dangerouslyAllowBrowser: true
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            ...messages,
+            userMessage
+          ],
+        }),
       });
 
-      const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
-          userMessage
-        ],
-      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
+      const data = await response.json();
       const assistantMessage = {
         role: 'assistant',
-        content: response.choices[0].message.content
+        content: data.choices[0].message.content
       };
 
       setMessages(prev => [...prev, assistantMessage]);
@@ -62,7 +68,7 @@ function App() {
       <div className="relative py-3 sm:max-w-xl sm:mx-auto w-full px-4 sm:px-0">
         <div className="bg-white shadow-lg rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h1 className="text-xl font-semibold mb-4">Resume and FAQ - Hoxie</h1>
+            <h1 className="text-xl font-semibold mb-4">Portfolio Chat Assistant</h1>
             <div className="h-96 overflow-y-auto mb-4 space-y-4">
               {messages.map((message, index) => (
                 <div
@@ -109,4 +115,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
