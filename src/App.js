@@ -62,55 +62,41 @@ function App() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto w-full px-4 sm:px-0">
-        <div className="bg-white shadow-lg rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h1 className="text-xl font-semibold mb-4">Portfolio Chat Assistant</h1>
-            <div className="h-96 overflow-y-auto mb-4 space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`p-3 rounded-lg ${
-                    message.role === 'user'
-                      ? 'bg-blue-100 ml-auto max-w-md'
-                      : 'bg-gray-100 mr-auto max-w-md'
-                  }`}
-                >
-                  {message.content}
-                </div>
-              ))}
-              {isLoading && (
-                <div className="bg-gray-100 p-3 rounded-lg mr-auto max-w-md">
-                  Thinking...
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-            <form onSubmit={handleSubmit} className="mt-4">
-              <div className="flex space-x-4">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask me anything about my professional background..."
-                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  disabled={isLoading}
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+  return React.createElement('div', { className: 'min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12' },
+    React.createElement('div', { className: 'relative py-3 sm:max-w-xl sm:mx-auto w-full px-4 sm:px-0' },
+      React.createElement('div', { className: 'bg-white shadow-lg rounded-lg' },
+        React.createElement('div', { className: 'px-4 py-5 sm:p-6' },
+          React.createElement('h1', { className: 'text-xl font-semibold mb-4' }, 'Portfolio Chat Assistant'),
+          React.createElement('div', { className: 'h-96 overflow-y-auto mb-4 space-y-4' },
+            messages.map((message, index) =>
+              React.createElement('div', {
+                key: index,
+                className: `p-3 rounded-lg ${message.role === 'user' ? 'bg-blue-100 ml-auto max-w-md' : 'bg-gray-100 mr-auto max-w-md'}`
+              }, message.content)
+            ),
+            isLoading && React.createElement('div', { className: 'bg-gray-100 p-3 rounded-lg mr-auto max-w-md' }, 'Thinking...'),
+            React.createElement('div', { ref: messagesEndRef })
+          ),
+          React.createElement('form', { onSubmit: handleSubmit, className: 'mt-4' },
+            React.createElement('div', { className: 'flex space-x-4' },
+              React.createElement('input', {
+                type: 'text',
+                value: input,
+                onChange: (e) => setInput(e.target.value),
+                placeholder: 'Ask me anything about my professional background...',
+                className: 'flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50',
+                disabled: isLoading
+              }),
+              React.createElement('button', {
+                type: 'submit',
+                disabled: isLoading,
+                className: 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50'
+              }, 'Send')
+            )
+          )
+        )
+      )
+    )
   );
 }
 
